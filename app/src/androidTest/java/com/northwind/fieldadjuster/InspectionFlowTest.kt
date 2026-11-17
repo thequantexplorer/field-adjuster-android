@@ -84,4 +84,13 @@ class InspectionFlowTest {
         rule.onNodeWithTag("undo-remove").assertIsNotEnabled()
         rule.onNodeWithTag("estimate-total").assertTextEquals("$4,850.00")
     }
+
+    @Test
+    fun editsSurviveActivityRecreation() {
+        openClm2004()
+        rule.onNodeWithTag("remove-drywall").performClick()
+        rule.activityRule.scenario.recreate()
+        rule.onNodeWithTag("estimate-total").assertTextEquals("$6,600.00")
+        rule.onNodeWithTag("undo-remove").assertIsEnabled()
+    }
 }
